@@ -21,39 +21,48 @@ let computerScore = 0;
 
 const resultContainer = document.querySelector("#result")
 const resultPara = document.createElement("p");
+const displayChoice = document.createElement("p");
 
 function displayResult(){
     resultPara.textContent = `You : ${humanScore} ---- Coumputer : ${computerScore}`
     resultContainer.appendChild(resultPara);
+    resultContainer.appendChild(displayChoice);
 }
 
-function playRound(computerChoice){
-    
+function playRound(){
+        let computerChoice = getComputerChoice();
         if(humanChoice === "Rock" && computerChoice === "Paper"){
          computerScore++ ;
-         displayResult()
+         displayChoice.textContent = `${humanChoice} ---- ${computerChoice}`
+         displayResult();
         }
         else if(humanChoice === "Paper" && computerChoice === "Scissors") {
             computerScore++ ;
+            displayChoice.textContent = `${humanChoice} ---- ${computerChoice}`
             displayResult();
         }
         else if(humanChoice === "Scissors" && computerChoice === "Rock"){
             computerScore++ ;
+            displayChoice.textContent = `${humanChoice} ---- ${computerChoice}`
             displayResult();
         }
         else if(humanChoice === "Rock" && computerChoice === "Scissors"){
             humanScore++ ;
+            displayChoice.textContent = `${humanChoice} ---- ${computerChoice}`
             displayResult();
         }
         else if(humanChoice === "Paper" && computerChoice === "Rock"){
             humanScore++ ;
+            displayChoice.textContent = `${humanChoice} ---- ${computerChoice}`
             displayResult();
         }
         else if(humanChoice === "Scissors" && computerChoice === "Paper"){
             humanScore++ ;
+            displayChoice.textContent = `${humanChoice} ---- ${computerChoice}`
             displayResult();
         }
         else if(humanChoice === computerChoice) {
+            displayChoice.textContent = `${humanChoice} ---- ${computerChoice}`
             displayResult();
         }
     }
@@ -61,13 +70,11 @@ function playRound(computerChoice){
     function getHumanChoice(){
         const button = document.querySelectorAll("button");
         let playerSelection;
-        let computerChoice;
         button.forEach(function(btn){
         btn.addEventListener("click", function(){    
         playerSelection = btn.textContent.at(0).toUpperCase() + btn.textContent.slice(1).toLowerCase();
-        computerChoice = getComputerChoice();
         humanChoice = playerSelection;
-        playRound(computerChoice);
+        playRound();
         })
     });
     }
