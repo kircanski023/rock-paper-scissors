@@ -22,6 +22,7 @@ let computerScore = 0;
 const resultContainer = document.querySelector("#result")
 const resultPara = document.createElement("p");
 const displayChoice = document.createElement("p");
+const displayWinner = document.createElement("p");
 
 function displayResult(){
     resultPara.textContent = `You : ${humanScore} ---- Coumputer : ${computerScore}`
@@ -30,6 +31,9 @@ function displayResult(){
 }
 
 function playRound(){
+        if(resultContainer.contains(displayWinner)){
+            resultContainer.removeChild(displayWinner);
+        }
         let computerChoice = getComputerChoice();
         if(humanChoice === "Rock" && computerChoice === "Paper"){
          computerScore++ ;
@@ -67,20 +71,33 @@ function playRound(){
         }
     }
 
-    function getHumanChoice(){
+    function stopGame(){
+        resultContainer.removeChild(displayChoice);
+        if(humanScore == 5){
+            displayWinner.textContent = "You Win!"
+            resultContainer.appendChild(displayWinner);
+        }
+        else if(computerScore == 5){
+            displayWinner.textContent = "Computer Wins!"
+            resultContainer.appendChild(displayWinner);
+        }
+        humanScore = 0;
+        computerScore = 0;
+    }
+
+    function playGame(){
         const button = document.querySelectorAll("button");
         let playerSelection;
         button.forEach(function(btn){
         btn.addEventListener("click", function(){    
-        playerSelection = btn.textContent.at(0).toUpperCase() + btn.textContent.slice(1).toLowerCase();
-        humanChoice = playerSelection;
-        playRound();
-        })
-    });
+                playerSelection = btn.textContent.at(0).toUpperCase() + btn.textContent.slice(1).toLowerCase();
+                humanChoice = playerSelection;
+                playRound();
+                if(humanScore == 5 || computerScore == 5){
+                    stopGame();
+                  }
+            })
+        });
     }
-    function playGame(){
-    while(humanScore < 5 && computerScore < 5){
-        console.log(playRound(getComputerChoice()));
-    }
-}
-getHumanChoice();
+playGame()
+
